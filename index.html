@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AquaHertz - Simulador de Poluição Sonora Marinha</title>
+    <meta name="description" content="Simulador educacional interativo sobre os efeitos da poluição sonora nos ecossistemas marinhos. Explore como o ruído humano afeta a vida aquática.">
+    
+    <!-- CSS direto no HTML para facilitar o deploy -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="app">
+        <!-- Header -->
+        <header class="header">
+            <div class="container">
+                <div class="header-content">
+                    <div class="logo">
+                        <h1 class="logo-text">
+                            <i class="fas fa-water"></i>
+                            AquaHertz
+                        </h1>
+                        <p class="subtitle">Simulador de Poluição Sonora Marinha</p>
+                    </div>
+                    <div class="header-controls">
+                        <button id="infoBtn" class="btn btn-secondary">
+                            <i class="fas fa-info-circle"></i>
+                            Sobre
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <div class="container">
+                <div class="grid">
+                    <!-- Control Panel -->
+                    <div class="control-panel">
+                        <div class="card">
+                            <h3 class="card-title">
+                                <i class="fas fa-cog"></i>
+                                Controles da Simulação
+                            </h3>
+                            
+                            <div class="control-section">
+                                <label>Modo de Simulação:</label>
+                                <div class="radio-group">
+                                    <label class="radio-item">
+                                        <input type="radio" name="mode" value="manual" checked>
+                                        <span>Manual</span>
+                                    </label>
+                                    <label class="radio-item">
+                                        <input type="radio" name="mode" value="auto">
+                                        <span>Automático</span>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="control-section">
+                                <label>Tipo de Fonte de Ruído:</label>
+                                <select id="noiseType" class="select-input">
+                                    <option value="">Selecione uma fonte</option>
+                                    <option value="ship">Navio Comercial (120-140 dB)</option>
+                                    <option value="sonar">Sonar Militar (180-200 dB)</option>
+                                    <option value="drilling">Perfuração Submarina (150-170 dB)</option>
+                                    <option value="construction">Construção Marítima (140-160 dB)</option>
+                                </select>
+                            </div>
+
+                            <div class="button-group">
+                                <button id="startBtn" class="btn btn-primary">
+                                    <i class="fas fa-play"></i>
+                                    Iniciar Simulação
+                                </button>
+                                <button id="stopBtn" class="btn btn-secondary">
+                                    <i class="fas fa-stop"></i>
+                                    Parar
+                                </button>
+                                <button id="resetBtn" class="btn btn-danger">
+                                    <i class="fas fa-undo"></i>
+                                    Resetar
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Metrics Dashboard -->
+                        <div class="card">
+                            <h3 class="card-title">
+                                <i class="fas fa-chart-line"></i>
+                                Monitoramento Ambiental
+                            </h3>
+                            
+                            <div class="metric">
+                                <div class="metric-header">
+                                    <span>Nível de Ruído Atual</span>
+                                    <span class="metric-value" id="noiseLevel">45 dB</span>
+                                </div>
+                                <div class="progress-bar">
+                                    <div class="progress-fill" id="noiseProgress" style="width: 25%;"></div>
+                                </div>
+                                <div class="metric-labels">
+                                    <span>Natural: &lt; 60 dB</span>
+                                    <span>Crítico: &gt; 90 dB</span>
+                                </div>
+                            </div>
+
+                            <div class="metric">
+                                <div class="metric-header">
+                                    <span>Índice de Bem-estar Marinho</span>
+                                    <span class="metric-value metric-value-wellness" id="wellnessLevel">85%</span>
+                                </div>
+                                <div class="progress-bar">
+                                    <div class="progress-fill progress-wellness" id="wellnessProgress" style="width: 85%;"></div>
+                                </div>
+                                <div class="metric-labels">
+                                    <span>Crítico: &lt; 30%</span>
+                                    <span>Ótimo: &gt; 80%</span>
+                                </div>
+                            </div>
+
+                            <div class="metric">
+                                <div class="metric-header">
+                                    <span>Animais em Estresse</span>
+                                    <span class="metric-value" id="stressedAnimals">0</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Simulation Canvas -->
+                    <div class="simulation-container">
+                        <div class="card">
+                            <h3 class="card-title">
+                                <i class="fas fa-eye"></i>
+                                Ambiente Marinho
+                                <span class="canvas-instruction">Clique para adicionar fonte de ruído</span>
+                            </h3>
+                            
+                            <div id="simulationCanvas" class="simulation-canvas">
+                                <!-- Marine animals -->
+                                <div class="marine-animal whale" style="left: 20%; top: 30%;" data-type="whale">
+                                    <i class="fas fa-fish"></i>
+                                    <span class="animal-label">Baleia</span>
+                                </div>
+                                <div class="marine-animal dolphin" style="left: 60%; top: 20%;" data-type="dolphin">
+                                    <i class="fas fa-fish"></i>
+                                    <span class="animal-label">Golfinho</span>
+                                </div>
+                                <div class="marine-animal fish-group" style="left: 80%; top: 50%;" data-type="fish">
+                                    <i class="fas fa-fish"></i>
+                                    <span class="animal-label">Cardume</span>
+                                </div>
+                                <div class="marine-animal turtle" style="left: 30%; top: 70%;" data-type="turtle">
+                                    <i class="fas fa-fish"></i>
+                                    <span class="animal-label">Tartaruga</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Educational Information Panel -->
+                <div class="educational-panel">
+                    <div class="card">
+                        <div class="grid-2">
+                            <div>
+                                <h3 class="section-title">
+                                    <i class="fas fa-graduation-cap"></i>
+                                    Sobre a Poluição Sonora Marinha
+                                </h3>
+                                <div class="text-content">
+                                    <p>
+                                        A poluição sonora nos oceanos é uma das principais ameaças à vida marinha. Sons de navios, 
+                                        sonares militares e atividades industriais podem viajar centenas de quilômetros debaixo d'água, 
+                                        interferindo na comunicação, navegação e comportamento dos animais marinhos.
+                                    </p>
+                                    <p>
+                                        Esta simulação permite explorar como diferentes fontes de ruído afetam o ecossistema marinho, 
+                                        baseada em pesquisas científicas reais sobre acústica oceânica e comportamento animal.
+                                    </p>
+                                </div>
+                            </div>
+                            
+                            <div>
+                                <h4 class="section-subtitle">
+                                    <i class="fas fa-lightbulb"></i>
+                                    Fatos Científicos
+                                </h4>
+                                <div class="facts-grid">
+                                    <div class="fact-item">
+                                        <i class="fas fa-wave-square"></i>
+                                        <div>
+                                            <div class="fact-title">Propagação do Som</div>
+                                            <div class="fact-description">O som viaja 4x mais rápido na água que no ar</div>
+                                        </div>
+                                    </div>
+                                    <div class="fact-item">
+                                        <i class="fas fa-exclamation-triangle"></i>
+                                        <div>
+                                            <div class="fact-title">Impacto nas Baleias</div>
+                                            <div class="fact-description">Podem alterar rotas de migração por centenas de km</div>
+                                        </div>
+                                    </div>
+                                    <div class="fact-item">
+                                        <i class="fas fa-heartbeat"></i>
+                                        <div>
+                                            <div class="fact-title">Efeitos Fisiológicos</div>
+                                            <div class="fact-description">Aumento do cortisol e perda auditiva temporária</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="container">
+                <div class="footer-content">
+                    <div class="footer-section">
+                        <h5 class="footer-title">
+                            <i class="fas fa-book"></i>
+                            Recursos Educacionais
+                        </h5>
+                        <ul class="footer-links">
+                            <li><a href="#">Guia do Professor</a></li>
+                            <li><a href="#">Atividades Práticas</a></li>
+                            <li><a href="#">Referências Científicas</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-section">
+                        <h5 class="footer-title">
+                            <i class="fas fa-cog"></i>
+                            Ferramentas
+                        </h5>
+                        <ul class="footer-links">
+                            <li><a href="#">Configurações Avançadas</a></li>
+                            <li><a href="#">Exportar Dados</a></li>
+                            <li><a href="#">Salvar Simulação</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-section">
+                        <h5 class="footer-title">
+                            <i class="fas fa-info-circle"></i>
+                            Sobre o Projeto
+                        </h5>
+                        <p class="footer-description">
+                            AquaHertz foi desenvolvido como ferramenta educacional para conscientizar sobre os impactos 
+                            da poluição sonora nos ecossistemas marinhos.
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="footer-bottom">
+                    <div class="footer-credits">
+                        <span>© 2024 AquaHertz - Educação Ambiental Marinha</span>
+                        <span class="separator">•</span>
+                        <span class="author">Feito por Francisco Audir De Oliveira Filho — @filho.af</span>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Modal Info -->
+    <div id="infoModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Sobre o AquaHertz</h3>
+                <span class="close">&times;</span>
+            </div>
+            <div class="modal-body">
+                <p>
+                    O AquaHertz é um simulador educacional interativo que demonstra os efeitos da poluição sonora 
+                    nos ecossistemas marinhos. Desenvolvido com base em pesquisas científicas reais, permite 
+                    explorar como diferentes fontes de ruído humano afetam o comportamento e bem-estar dos animais marinhos.
+                </p>
+                <h4>Como usar:</h4>
+                <ul>
+                    <li>Selecione um tipo de fonte de ruído no painel de controle</li>
+                    <li>Clique no ambiente marinho para posicionar a fonte</li>
+                    <li>Observe como os animais reagem ao ruído</li>
+                    <li>Monitore as métricas ambientais em tempo real</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
