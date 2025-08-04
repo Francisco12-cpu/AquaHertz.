@@ -1,91 +1,90 @@
 # 🌊 AquaHertz - Simulador de Poluição Sonora Marinha
 
-![AquaHertz Logo](https://img.shields.io/badge/AquaHertz-Educação%20Ambiental-00ffff?style=for-the-badge&logo=data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTEyIDJMMTMuMDkgOC4yNkwyMCA5TDEzLjA5IDE1Ljc0TDEyIDIyTDEwLjkxIDE1Ljc0TDQgOUwxMC45MSA4LjI2TDEyIDJaIiBmaWxsPSIjMDBmZmZmIi8+Cjwvc3ZnPgo=)
+Simulador educacional interativo completamente funcional que demonstra os efeitos da poluição sonora nos ecossistemas marinhos através de simulação realística em tempo real.
 
-## 📖 Sobre o Projeto
+## ✨ Funcionalidades Principais
 
-AquaHertz é um simulador educacional interativo que demonstra os efeitos da poluição sonora nos ecossistemas marinhos. Desenvolvido como ferramenta pedagógica, permite explorar como diferentes fontes de ruído humano afetam o comportamento e bem-estar dos animais marinhos.
+- **Oceano 2D Animado**: Ambiente marinho com 30-100 animais renderizados via Canvas
+- **Comportamentos Realistas**: Peixes em cardumes, golfinhos, baleias e tartarugas com movimentos únicos  
+- **Sistema de Estresse**: 4 níveis visuais com reações comportamentais aos sons
+- **Propagação Sonora**: Ondas circulares com atenuação por distância
+- **Monitoramento Real**: Dashboard com métricas ambientais em tempo real
+- **Modos Manual/Automático**: Controle direto ou eventos aleatórios automáticos
+- **Design Responsivo**: Funciona perfeitamente em mobile e desktop
 
-### ✨ Características Principais
+## 🚀 Como Usar
 
-- 🎮 **Simulação Interativa**: Modo manual e automático para diferentes experiências de aprendizado
-- 🐋 **Animais Marinhos Realistas**: Baleias, golfinhos, cardumes e tartarugas com comportamentos específicos
-- 📊 **Monitoramento em Tempo Real**: Dashboard com métricas ambientais e índices de bem-estar
-- 🔊 **Fontes de Ruído Diversas**: Navios, sonares, perfuração e construção marítima
-- 🌊 **Ambiente Oceânico Imersivo**: Tema escuro com efeitos neon e partículas flutuantes
-- 📱 **Design Responsivo**: Funciona perfeitamente em dispositivos móveis e desktop
+1. **Configurar**: Escolha quantidade de animais (30-100) e modo de simulação
+2. **Iniciar**: Clique em "Iniciar Simulação" para ativar o oceano
+3. **Modo Manual**: Selecione fonte de ruído e clique no oceano para posicionar
+4. **Modo Automático**: Sons surgem automaticamente em intervalos aleatórios
+5. **Observar**: Monitore como os animais reagem e as métricas ambientais
 
-## 🚀 Demo ao Vivo
+## 📊 Métricas Monitoradas
 
-🔗 **[Acesse o AquaHertz Online](https://seuusuario.github.io/aquahertz)**
+- **Nível de Ruído Médio**: Intensidade sonora atual em decibéis
+- **Índice de Bem-estar**: Percentual de animais saudáveis (estresse < 30)
+- **Estresse Crítico**: Percentual de animais em estado crítico (estresse > 80)
+- **Animais Ativos**: Contador em tempo real
 
-## 🛠️ Tecnologias Utilizadas
+## 🔊 Fontes de Ruído
 
-- **HTML5**: Estrutura semântica e acessível
-- **CSS3**: Gradientes oceânicos, efeitos neon e animações fluidas
-- **JavaScript ES6+**: Simulação interativa e manipulação do DOM
-- **Font Awesome**: Ícones para interface e elementos visuais
-- **Google Fonts**: Tipografia Inter para melhor legibilidade
+- **Navio Comercial**: 120-140 dB, alcance 200px, duração 15s
+- **Sonar Militar**: 180-200 dB, alcance 300px, duração 8s  
+- **Perfuração Submarina**: 150-170 dB, alcance 250px, duração 20s
+- **Construção Marítima**: 140-160 dB, alcance 180px, duração 12s
 
-## 📋 Funcionalidades
+## 🐟 Comportamentos dos Animais
 
-### Modos de Simulação
-- **Manual**: O usuário controla a adição de fontes de ruído
-- **Automático**: Cenários pré-configurados com múltiplas fontes
+### Peixes
+- Nadam em cardumes com movimento em ziguezague
+- Atraídos por outros peixes próximos (raio de 60px)
+- Movimento errático quando estressados
 
-### Fontes de Ruído
-- 🚢 **Navios Comerciais** (120-140 dB)
-- 📡 **Sonares Militares** (180-200 dB)
-- ⚙️ **Perfuração Submarina** (150-170 dB)
-- 🔨 **Construção Marítima** (140-160 dB)
+### Golfinhos  
+- Movem-se em arcos graciosos
+- Nadam em círculos quando desorientados (estresse > 60)
+- Velocidade moderada-alta
 
-### Métricas Ambientais
-- 📈 Nível de ruído atual em decibéis
-- 💚 Índice de bem-estar marinho
-- ⚠️ Contador de animais em estresse
-- 🌊 Visualização de ondas sonoras por tipo
+### Tartarugas
+- Movimento lento e constante
+- Mudanças bruscas de direção quando estressadas
+- Velocidade baixa
 
-## 🎯 Objetivos Educacionais
+### Baleias
+- Movimentos em curvas amplas e elegantes
+- Podem alterar "rotas de migração" sob estresse
+- Maior tamanho e presença visual
 
-- Conscientizar sobre impactos da poluição sonora marinha
-- Demonstrar como o som se propaga nos oceanos
-- Mostrar efeitos comportamentais nos animais marinhos
-- Ensinar sobre conservação e proteção dos ecossistemas aquáticos
+## 🎨 Níveis de Estresse Visual
 
-## 📊 Base Científica
+- **0-30 (Azul)**: Calmo - comportamento normal
+- **31-60 (Amarelo)**: Assustado - movimento ligeiramente acelerado  
+- **61-80 (Laranja)**: Estressado - movimento errático, velocidade aumentada
+- **81-100 (Vermelho)**: Crítico - desorientação total, colisões
 
-O simulador utiliza dados reais de pesquisas em:
-- Acústica oceânica e propagação do som
-- Comportamento animal e limiares de estresse
-- Impactos da atividade humana nos oceanos
-- Bioacústica marinha e comunicação animal
+## 🛠️ Tecnologias
+
+- **HTML5 Canvas**: Renderização 2D de alta performance
+- **CSS3**: Tema neon oceânico com animações fluidas
+- **JavaScript ES6+**: Física, comportamento animal e sistema de partículas
+- **Font Awesome**: Ícones da interface
+- **Google Fonts**: Tipografia Inter
+
+## 📱 Instalação
+
+1. Baixe os 4 arquivos: `index.html`, `style.css`, `script.js`, `README.md`
+2. Coloque todos na mesma pasta
+3. Abra `index.html` no navegador ou faça deploy no GitHub Pages
 
 ## 👨‍💻 Desenvolvedor
 
 **Francisco Audir De Oliveira Filho**  
-📧 Email: [seu-email@exemplo.com]  
-🐱 GitHub: [@filho.af]  
-🔗 LinkedIn: [linkedin.com/in/seuusuario]
+Instagram: [@filho.af](https://instagram.com/filho.af)
 
 ## 📄 Licença
 
-Este projeto está licenciado sob a Licença MIT - veja o arquivo [LICENSE](LICENSE) para detalhes.
-
----
-
-### 🌟 Contribuições
-
-Contribuições são bem-vindas! Sinta-se à vontade para:
-- Relatar bugs através das issues
-- Sugerir novas funcionalidades
-- Melhorar a documentação
-- Submeter pull requests
-
-### 🙏 Agradecimentos
-
-- Pesquisadores em bioacústica marinha
-- Organizações de conservação oceânica
-- Comunidade educacional e desenvolvedores
+Projeto educacional de código aberto para conscientização ambiental.
 
 ---
 
