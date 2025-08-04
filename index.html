@@ -71,12 +71,22 @@
                                 </select>
                             </div>
 
+                            <div class="control-section">
+                                <label>Quantidade de Animais:</label>
+                                <input type="range" id="animalCount" min="30" max="100" value="60" class="range-input">
+                                <span id="animalCountDisplay">60</span>
+                            </div>
+
                             <div class="button-group">
                                 <button id="startBtn" class="btn btn-primary">
                                     <i class="fas fa-play"></i>
                                     Iniciar Simulação
                                 </button>
-                                <button id="stopBtn" class="btn btn-secondary">
+                                <button id="pauseBtn" class="btn btn-warning" style="display: none;">
+                                    <i class="fas fa-pause"></i>
+                                    Pausar
+                                </button>
+                                <button id="stopBtn" class="btn btn-secondary" style="display: none;">
                                     <i class="fas fa-stop"></i>
                                     Parar
                                 </button>
@@ -92,40 +102,55 @@
                             <h3 class="card-title">
                                 <i class="fas fa-chart-line"></i>
                                 Monitoramento Ambiental
+                                <button id="togglePanel" class="btn-toggle">
+                                    <i class="fas fa-eye"></i>
+                                </button>
                             </h3>
                             
-                            <div class="metric">
-                                <div class="metric-header">
-                                    <span>Nível de Ruído Atual</span>
-                                    <span class="metric-value" id="noiseLevel">45 dB</span>
+                            <div class="metrics-container">
+                                <div class="metric">
+                                    <div class="metric-header">
+                                        <span>Nível de Ruído Médio</span>
+                                        <span class="metric-value" id="noiseLevel">45 dB</span>
+                                    </div>
+                                    <div class="progress-bar">
+                                        <div class="progress-fill" id="noiseProgress" style="width: 25%;"></div>
+                                    </div>
+                                    <div class="metric-labels">
+                                        <span>Natural: &lt; 60 dB</span>
+                                        <span>Crítico: &gt; 90 dB</span>
+                                    </div>
                                 </div>
-                                <div class="progress-bar">
-                                    <div class="progress-fill" id="noiseProgress" style="width: 25%;"></div>
-                                </div>
-                                <div class="metric-labels">
-                                    <span>Natural: &lt; 60 dB</span>
-                                    <span>Crítico: &gt; 90 dB</span>
-                                </div>
-                            </div>
 
-                            <div class="metric">
-                                <div class="metric-header">
-                                    <span>Índice de Bem-estar Marinho</span>
-                                    <span class="metric-value metric-value-wellness" id="wellnessLevel">85%</span>
+                                <div class="metric">
+                                    <div class="metric-header">
+                                        <span>Índice de Bem-estar Geral</span>
+                                        <span class="metric-value metric-value-wellness" id="wellnessLevel">85%</span>
+                                    </div>
+                                    <div class="progress-bar">
+                                        <div class="progress-fill progress-wellness" id="wellnessProgress" style="width: 85%;"></div>
+                                    </div>
+                                    <div class="metric-labels">
+                                        <span>Crítico: &lt; 30%</span>
+                                        <span>Ótimo: &gt; 80%</span>
+                                    </div>
                                 </div>
-                                <div class="progress-bar">
-                                    <div class="progress-fill progress-wellness" id="wellnessProgress" style="width: 85%;"></div>
-                                </div>
-                                <div class="metric-labels">
-                                    <span>Crítico: &lt; 30%</span>
-                                    <span>Ótimo: &gt; 80%</span>
-                                </div>
-                            </div>
 
-                            <div class="metric">
-                                <div class="metric-header">
-                                    <span>Animais em Estresse</span>
-                                    <span class="metric-value" id="stressedAnimals">0</span>
+                                <div class="metric">
+                                    <div class="metric-header">
+                                        <span>Estresse Crítico</span>
+                                        <span class="metric-value" id="criticalStress">0%</span>
+                                    </div>
+                                    <div class="progress-bar">
+                                        <div class="progress-fill progress-critical" id="criticalProgress" style="width: 0%;"></div>
+                                    </div>
+                                </div>
+
+                                <div class="metric">
+                                    <div class="metric-header">
+                                        <span>Animais Ativos</span>
+                                        <span class="metric-value" id="activeAnimals">0</span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -137,26 +162,13 @@
                             <h3 class="card-title">
                                 <i class="fas fa-eye"></i>
                                 Ambiente Marinho
-                                <span class="canvas-instruction">Clique para adicionar fonte de ruído</span>
+                                <span class="canvas-instruction" id="canvasInstruction">Configure a simulação e clique em Iniciar</span>
                             </h3>
                             
-                            <div id="simulationCanvas" class="simulation-canvas">
-                                <!-- Marine animals -->
-                                <div class="marine-animal whale" style="left: 20%; top: 30%;" data-type="whale">
-                                    <i class="fas fa-fish"></i>
-                                    <span class="animal-label">Baleia</span>
-                                </div>
-                                <div class="marine-animal dolphin" style="left: 60%; top: 20%;" data-type="dolphin">
-                                    <i class="fas fa-fish"></i>
-                                    <span class="animal-label">Golfinho</span>
-                                </div>
-                                <div class="marine-animal fish-group" style="left: 80%; top: 50%;" data-type="fish">
-                                    <i class="fas fa-fish"></i>
-                                    <span class="animal-label">Cardume</span>
-                                </div>
-                                <div class="marine-animal turtle" style="left: 30%; top: 70%;" data-type="turtle">
-                                    <i class="fas fa-fish"></i>
-                                    <span class="animal-label">Tartaruga</span>
+                            <div class="canvas-container">
+                                <canvas id="oceanCanvas" width="800" height="500"></canvas>
+                                <div class="canvas-overlay">
+                                    <div id="statusDisplay" class="status-display">Pronto para iniciar</div>
                                 </div>
                             </div>
                         </div>
@@ -230,70 +242,100 @@
                             Recursos Educacionais
                         </h5>
                         <ul class="footer-links">
-                            <li><a href="#">Guia do Professor</a></li>
-                            <li><a href="#">Atividades Práticas</a></li>
-                            <li><a href="#">Referências Científicas</a></li>
+                            <li><a href="#" class="footer-link">Guia sobre Acústica Marinha</a></li>
+                            <li><a href="#" class="footer-link">Pesquisas Científicas</a></li>
+                            <li><a href="#" class="footer-link">Conservação Oceânica</a></li>
                         </ul>
                     </div>
+                    
                     <div class="footer-section">
                         <h5 class="footer-title">
-                            <i class="fas fa-cog"></i>
-                            Ferramentas
+                            <i class="fas fa-users"></i>
+                            Comunidade
                         </h5>
                         <ul class="footer-links">
-                            <li><a href="#">Configurações Avançadas</a></li>
-                            <li><a href="#">Exportar Dados</a></li>
-                            <li><a href="#">Salvar Simulação</a></li>
+                            <li><a href="#" class="footer-link">Fórum de Discussão</a></li>
+                            <li><a href="#" class="footer-link">Relatório de Bugs</a></li>
+                            <li><a href="#" class="footer-link">Sugestões</a></li>
                         </ul>
                     </div>
+                    
                     <div class="footer-section">
                         <h5 class="footer-title">
-                            <i class="fas fa-info-circle"></i>
-                            Sobre o Projeto
+                            <i class="fas fa-heart"></i>
+                            Apoie o Projeto
                         </h5>
-                        <p class="footer-description">
-                            AquaHertz foi desenvolvido como ferramenta educacional para conscientizar sobre os impactos 
-                            da poluição sonora nos ecossistemas marinhos.
-                        </p>
+                        <ul class="footer-links">
+                            <li><a href="#" class="footer-link">Contribuir no GitHub</a></li>
+                            <li><a href="#" class="footer-link">Compartilhar</a></li>
+                            <li><a href="#" class="footer-link">Feedback</a></li>
+                        </ul>
                     </div>
                 </div>
                 
                 <div class="footer-bottom">
-                    <div class="footer-credits">
-                        <span>© 2024 AquaHertz - Educação Ambiental Marinha</span>
-                        <span class="separator">•</span>
-                        <span class="author">Feito por Francisco Audir De Oliveira Filho — <a href="https://instagram.com/filho.af" target="_blank">@filho.af</a></span>
+                    <div class="footer-copyright">
+                        <p>&copy; 2024 AquaHertz. Projeto educacional para conscientização ambiental.</p>
+                        <p class="footer-credits">
+                            Desenvolvido por <strong>Francisco Audir De Oliveira Filho</strong> • 
+                            <a href="https://instagram.com/filho.af" target="_blank" class="instagram-link">
+                                <i class="fab fa-instagram"></i> @filho.af
+                            </a> • 
+                            <i class="fas fa-water"></i> Proteja nossos oceanos!
+                        </p>
                     </div>
                 </div>
             </div>
         </footer>
     </div>
 
-    <!-- Modal Info -->
+    <!-- Info Modal -->
     <div id="infoModal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
-                <h3>Sobre o AquaHertz</h3>
+                <h2 class="modal-title">
+                    <i class="fas fa-info-circle"></i>
+                    Sobre o AquaHertz
+                </h2>
                 <span class="close">&times;</span>
             </div>
             <div class="modal-body">
-                <p>
-                    O AquaHertz é um simulador educacional interativo que demonstra os efeitos da poluição sonora 
-                    nos ecossistemas marinhos. Desenvolvido com base em pesquisas científicas reais, permite 
-                    explorar como diferentes fontes de ruído humano afetam o comportamento e bem-estar dos animais marinhos.
-                </p>
-                <h4>Como usar:</h4>
-                <ul>
-                    <li>Selecione um tipo de fonte de ruído no painel de controle</li>
-                    <li>Clique no ambiente marinho para posicionar a fonte</li>
-                    <li>Observe como os animais reagem ao ruído</li>
-                    <li>Monitore as métricas ambientais em tempo real</li>
-                </ul>
+                <div class="modal-section">
+                    <h3>Como usar o simulador:</h3>
+                    <ol class="instruction-list">
+                        <li>Escolha entre modo Manual ou Automático</li>
+                        <li>Selecione um tipo de fonte de ruído no painel</li>
+                        <li>No modo manual, clique no oceano para posicionar a fonte</li>
+                        <li>Observe como os animais reagem ao ruído</li>
+                        <li>Monitore as métricas ambientais em tempo real</li>
+                    </ol>
+                </div>
+                
+                <div class="modal-section">
+                    <h3>Níveis de estresse dos animais:</h3>
+                    <div class="stress-legend">
+                        <div class="stress-item">
+                            <div class="stress-color stress-calm"></div>
+                            <span>0-30: Calmo (Azul)</span>
+                        </div>
+                        <div class="stress-item">
+                            <div class="stress-color stress-scared"></div>
+                            <span>31-60: Assustado (Amarelo)</span>
+                        </div>
+                        <div class="stress-item">
+                            <div class="stress-color stress-stressed"></div>
+                            <span>61-80: Estressado (Laranja)</span>
+                        </div>
+                        <div class="stress-item">
+                            <div class="stress-color stress-critical"></div>
+                            <span>81-100: Crítico (Vermelho)</span>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 
     <script src="script.js"></script>
 </body>
-
 </html>
